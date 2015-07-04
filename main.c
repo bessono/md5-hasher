@@ -16,6 +16,8 @@
 void int_md5(char *hash);
 void make_md5(char *str);
 
+static char sresult[16]="-";
+
 int main(int argc, char *argv[]){
 	if(argc >= 3){
 		if(strstr(argv[1],"-i")){
@@ -23,16 +25,21 @@ int main(int argc, char *argv[]){
 		}
 	}
 	
-	
-		
-	
 return 0;
 }
 
 void int_md5(char *hash){
+	int i=0;
+	char str[7] = "-";
 	printf("hash = %s \n",hash);
-	make_md5(hash);
-		
+	for(i=0; i < 99999999; i++){
+		sprintf(str,"%d",i);
+		make_md5(str);
+		if(strstr(hash,sresult)){
+			printf("\n bingo!!! password=%d \n",i);
+			break;
+		}
+	}	
 }
 
 void make_md5(char *str){
@@ -55,7 +62,7 @@ void make_md5(char *str){
 		strcat(result,hash);
 	
 	}	
-	printf("\n md5=%s \n",result);
-
+	strcpy(sresult,result);
+	
 }
 
