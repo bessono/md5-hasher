@@ -19,6 +19,14 @@ void make_md5(char *str);
 static char sresult[16]="-";
 
 int main(int argc, char *argv[]){
+	if((argc == 2) && (strstr(argv[1],"-h"))) {
+		printf("\n ========================= \n");
+		printf(" -h View this help \n");
+		printf(" -i [hash] try to broot this hash in desimail format from 0 to 99999999.\n");
+		printf("    if you suspect that password must be not symbolic \n");
+		exit(0);	
+	}
+
 	if(argc >= 3){
 		if(strstr(argv[1],"-i")){
 			int_md5(argv[2]);
