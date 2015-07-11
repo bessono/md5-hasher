@@ -31,6 +31,7 @@ int main(int argc, char *argv[]){
 		printf(" -s [hash] try to broot this hash in string form. From 1 to 6 simbols in password \n");
 		printf(" -f [hash] [file_name] broot passwords from text file \n");
 		printf(" -m [text] get md5 hash from your's text\n");
+		printf(" -v get version number\n");
 		exit(0);	
 	}
 
@@ -46,6 +47,11 @@ int main(int argc, char *argv[]){
 		}
 		if(strstr(argv[1],"-m")){
 			get_md5(argv[2]);
+		}
+	}
+	if(argc > 1){
+		if(strstr(argv[1],"-v")){
+			printf("Md5-Hasher ver. 0.1\n");
 		}
 	}
 	
