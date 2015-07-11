@@ -16,8 +16,10 @@
 void int_md5(char *hash);
 void str_md5(char *hash);
 void make_md5(char *str);
+void file_md5(char *hash, char *filename);
+void get_md5(char *text);
 
-static char sresult[16]="-";
+static char sresult[128]="-";
 
 
 int main(int argc, char *argv[]){
@@ -27,19 +29,53 @@ int main(int argc, char *argv[]){
 		printf(" -i [hash] try to broot this hash in desimail format from 0 to 99999999.\n");
 		printf("    if you suspect that password must be not symbolic \n");
 		printf(" -s [hash] try to broot this hash in string form. From 1 to 6 simbols in password \n");
+		printf(" -f [hash] [file_name] broot passwords from text file \n");
+		printf(" -m [text] get md5 hash from your's text\n");
 		exit(0);	
 	}
 
-	if(argc >= 3){
+	if(argc > 2){
 		if(strstr(argv[1],"-i")){
 			int_md5(argv[2]);
 		}
 		if(strstr(argv[1],"-s")){
 			str_md5(argv[2]);
 		}
+		if(strstr(argv[1],"-f")){
+			file_md5(argv[2],argv[3]);
+		}
+		if(strstr(argv[1],"-m")){
+			get_md5(argv[2]);
+		}
 	}
 	
 return 0;
+}
+
+void get_md5(char *text){
+	make_md5(text);
+	printf("hash = %s \n",sresult);
+}
+
+void file_md5(char *hash, char *filename){
+	FILE *fm;
+	char line[128] = "-";
+	int i = 0;
+	fm = fopen(filename,"r");
+	while(fgets(line,128,fm)){
+		for(i=0; i<= strlen(line);i++){
+			if(line[i] == '\n'){line[i] = '\0';}
+			if(line[i] == '\t'){line[i] = '\0';}
+			if(line[i] == '\r'){line[i] = '\0';}
+		}
+		make_md5(line);
+		if(strstr(sresult,hash)){
+			printf("bingo!!! password=%s \n",line);
+			break;
+		}
+	}
+	fclose(fm);
+	
 }
 
 void str_md5(char *hash){
@@ -53,7 +89,7 @@ void str_md5(char *hash){
 	int j3 = 0;
 	int j4 = 0;
 	int j5 = 0;
-	int j6 = 0;
+	//int j6 = 0;
 			
 	for(j1=0; j1 <= strlen(symbols);j1++){
 		c_percent = j1*strlen(symbols)/100;
@@ -67,8 +103,8 @@ void str_md5(char *hash){
 					answer[3] = symbols[j4];
 					for(j5 = 0; j5 <= strlen(symbols); j5++){
 						answer[4] = symbols[j5];
-						for(j6 = 0; j6 <= strlen(symbols); j6++){
-						answer[5] = symbols[j6]; 
+						//for(j6 = 0; j6 <= strlen(symbols); j6++){
+						answer[5] = '\0';//symbols[j6]; 
 						answer[6] = '\0';
 						for(i=0; i<=strlen(answer); i++){
 							if(answer[i] == ' '){answer[i] = '\0';}
@@ -78,8 +114,8 @@ void str_md5(char *hash){
 							printf("\n bingo!!! password=%s \a \n",answer);
 							exit(0);
 						}
-						}
-						j6=0;
+					//	}
+					//	j6=0;
 					}
 					j5=0;
 				}
@@ -95,7 +131,6 @@ void int_md5(char *hash){
 	int i=0;
 	int c_percent = 0;
 	char str[7] = "-";
-	printf("hash = %s \n",hash);
 	for(i=0; i < 99999999; i++){
 		sprintf(str,"%d",i);
 		make_md5(str);
