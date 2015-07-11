@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
 		printf(" -h View this help \n");
 		printf(" -i [hash] try to broot this hash in desimail format from 0 to 99999999.\n");
 		printf("    if you suspect that password must be not symbolic \n");
-		printf(" -s [hash] try to broot this hash in string formst \n");
+		printf(" -s [hash] try to broot this hash in string form. From 1 to 6 simbols in password \n");
 		exit(0);	
 	}
 
@@ -44,7 +44,7 @@ return 0;
 
 void str_md5(char *hash){
 	char symbols[38] = "qwertyuiopasdfghjklzxcvbnm1234567890_ ";
-	char answer[6] = "-"; 
+	char answer[7] = "-"; 
 	
 	int c_percent = 0;
 	int i=0;
@@ -53,6 +53,7 @@ void str_md5(char *hash){
 	int j3 = 0;
 	int j4 = 0;
 	int j5 = 0;
+	int j6 = 0;
 			
 	for(j1=0; j1 <= strlen(symbols);j1++){
 		c_percent = j1*strlen(symbols)/100;
@@ -66,7 +67,9 @@ void str_md5(char *hash){
 					answer[3] = symbols[j4];
 					for(j5 = 0; j5 <= strlen(symbols); j5++){
 						answer[4] = symbols[j5];
-						answer[5] = '\0';
+						for(j6 = 0; j6 <= strlen(symbols); j6++){
+						answer[5] = symbols[j6]; 
+						answer[6] = '\0';
 						for(i=0; i<=strlen(answer); i++){
 							if(answer[i] == ' '){answer[i] = '\0';}
 						}
@@ -75,6 +78,8 @@ void str_md5(char *hash){
 							printf("\n bingo!!! password=%s \a \n",answer);
 							exit(0);
 						}
+						}
+						j6=0;
 					}
 					j5=0;
 				}
