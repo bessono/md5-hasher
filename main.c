@@ -1,7 +1,7 @@
 /* ========================================================= 
 /
 =	md5-hasher
-=	Author: Bessonv Alexandr Evgenivich
+=	Author: Bessonov Alexandr Evgenivich
 =	Author: e-mail: bessonomap@yandex.ru
 =	Author web-site: http://bessonov.in.ua
 =
